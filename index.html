@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anuário Anglo Pedreira</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        :root {
+            --bg: #f4f7fb;
+            --surface: #ffffff;
+            --surface-soft: #f8fafc;
+            --line: #e5e7eb;
+            --text: #172033;
+            --muted: #5b6475;
+            --primary: #1d4ed8;
+            --primary-soft: #edf3ff;
+            --shadow: rgba(15, 23, 42, 0.06);
+            --accessibility-font-size: 100%;
+            --accessibility-icon-filter: none;
+        }
+
+        html { scroll-behavior: smooth; }
+        html { font-size: var(--accessibility-font-size); }
+
+        html[data-theme="dark"] {
+            --bg: #111827;
+            --surface: #1f2937;
+            --surface-soft: #273449;
+            --line: #526176;
+            --text: #f3f4f6;
+            --muted: #c1cad8;
+            --primary: #93c5fd;
+            --primary-soft: #243a59;
+            --shadow: rgba(0, 0, 0, 0.28);
+            --accessibility-icon-filter: invert(1);
+        }
+
+        html.high-contrast:not([data-theme="dark"]) {
+            --bg: #ffffff;
+            --surface: #ffffff;
+            --surface-soft: #f2f2f2;
+            --line: #000000;
+            --text: #000000;
+            --muted: #111111;
+            --primary: #0037a8;
+            --primary-soft: #e5edff;
+            --shadow: rgba(0, 0, 0, 0.25);
+            --accessibility-icon-filter: contrast(1.6);
+        }
+
+        html.high-contrast[data-theme="dark"] {
+            --bg: #000000;
+            --surface: #000000;
+            --surface-soft: #111111;
+            --line: #ffffff;
+            --text: #ffffff;
+            --muted: #f0f0f0;
+            --primary: #ffff00;
+            --primary-soft: #202000;
+            --shadow: rgba(255, 255, 255, 0.25);
+            --accessibility-icon-filter: invert(1) contrast(1.6);
+        }
+
+        html.high-contrast body { background: var(--bg); }
+        html.high-contrast body::before,
+        html.high-contrast body::after { display: none; }
+        html.high-contrast .eyebrow,
+        html.high-contrast .intro-photo-box,
+        html.high-contrast .photo-frame,
+        html.high-contrast #selection-message {
+            background: var(--surface);
+            border-color: var(--line);
+            color: var(--text);
+        }
+        html.high-contrast .btn-primary { color: var(--surface); }
+        html[data-theme="dark"] .eyebrow { border-color: var(--line); }
+        html[data-theme="dark"] .intro-photo-box,
+        html[data-theme="dark"] .photo-frame { background: #182234; }
+        html[data-theme="dark"] #selection-message {
+            background: #14291f;
+            border-color: #4b9b70;
+            color: #c5f5d7;
+        }
+
+        body.accessibility-letter-spacing,
+        body.accessibility-letter-spacing * { letter-spacing: 0.08em !important; }
+
+        body {
+            align-items: center;
+            background:
+                radial-gradient(circle at 12% 14%, rgba(191, 219, 254, 0.9), transparent 16%),
+                radial-gradient(circle at 82% 18%, rgba(147, 197, 253, 0.75), transparent 18%),
+                radial-gradient(circle at 50% 100%, rgba(191, 219, 254, 0.55), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.75;
+        }
+
+        body::before {
+            width: 300px;
+            height: 300px;
+            background: rgba(191, 219, 254, 0.55);
+            top: 8%;
+            left: 6%;
+        }
+
+        body::after {
+            width: 340px;
+            height: 340px;
+            background: rgba(191, 219, 254, 0.45);
+            bottom: 8%;
+            right: 7%;
+        }
+
+        main {
+            margin: 32px auto 20px;
+            width: min(92%, 1100px);
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 22px 0 0;
+            padding: 0 12px;
+        }
+
+        nav a {
+            background: transparent;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: var(--text);
+            font: inherit;
+            font-weight: 700;
+            padding: 10px 16px;
+            text-decoration: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        nav a:hover {
+            background: var(--primary-soft);
+            border-color: var(--primary);
+        }
+
+        nav a:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        header {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px var(--shadow);
+            padding: clamp(20px, 4vw, 42px);
+        }
+
+        .eyebrow {
+            display: inline-block;
+            background: var(--primary-soft);
+            border: 1px solid #d7e4ff;
+            border-radius: 999px;
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            padding: 7px 12px;
+            text-transform: uppercase;
+        }
+
+        .hero-grid {
+            align-items: center;
+            display: grid;
+            gap: 28px;
+            grid-template-columns: 1.2fr 0.8fr;
+            margin-top: 24px;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            color: var(--text);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 0.96;
+            margin: 0 0 14px;
+            max-width: 8ch;
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 1.08rem;
+            line-height: 1.7;
+            margin: 0;
+            max-width: 560px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .btn {
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            padding: 11px 18px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            color: var(--text);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-visual .image-wrap {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 14px;
+            width: min(100%, 420px);
+        }
+
+        header img {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            display: block;
+            height: auto;
+            margin: 0 auto;
+            max-height: 460px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .stats-row {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            margin-top: 28px;
+        }
+
+        .stat-card {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 16px 14px;
+            text-align: center;
+        }
+
+        .stat-card strong {
+            display: block;
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 4px;
+        }
+
+        .stat-card span {
+            color: var(--muted);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        h2 {
+            color: var(--text);
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            color: var(--text);
+            font-size: clamp(1.08rem, 2vw, 1.35rem);
+            margin: 20px 0 10px;
+        }
+
+        p {
+            color: var(--text);
+            font-size: 1.03rem;
+            line-height: 1.7;
+            margin: 0 0 14px;
+        }
+
+        strong { color: var(--primary); }
+        em { color: var(--text); }
+
+        .panel,
+        .text-examples,
+        .class-selector,
+        #people-section {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            margin: 28px 0;
+            padding: 18px clamp(18px, 3vw, 28px);
+            text-align: left;
+        }
+
+        .text-examples ul {
+            color: var(--text);
+            line-height: 1.8;
+            margin: 12px 0 0 20px;
+            padding-left: 10px;
+        }
+
+        .text-examples li { margin-bottom: 6px; }
+
+        .text-examples blockquote {
+            background: var(--surface);
+            border-left: 3px solid var(--primary);
+            border-radius: 0 10px 10px 0;
+            color: var(--text);
+            margin: 18px 0 0;
+            padding: 12px 14px;
+        }
+
+        .intro-photo-area {
+            background: var(--surface-soft);
+            border: 1px dashed var(--line);
+            border-radius: 18px;
+            margin: 22px 0 10px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .intro-photo-box {
+            align-items: center;
+            background: #eef4ff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            min-height: 200px;
+            width: 100%;
+        }
+
+        .intro-photo-box span {
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        #people-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .people-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        }
+
+        .person-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .person-card img {
+            aspect-ratio: 1;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            display: block;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .person-card p {
+            font-size: 0.94rem;
+            font-weight: 700;
+            margin: 10px 0 0;
+        }
+
+        .photo-frame {
+            align-items: center;
+            aspect-ratio: 1;
+            background: #edf3ff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            margin: 16px 0;
+        }
+
+        label {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        select {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            color: var(--text);
+            font: inherit;
+            padding: 11px 12px;
+        }
+
+        select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        #cycle-field, #class-field, #selection-message { display: none; }
+
+        #selection-message {
+            background: #eefbf4;
+            border: 1px solid #cfe9d9;
+            border-radius: 10px;
+            color: #17613f;
+            font-weight: 700;
+            margin-top: 14px;
+            padding: 10px 12px;
+        }
+
+        details {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            margin-top: 24px;
+            padding: 12px 14px;
+        }
+
+        summary {
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        #nyan-zone {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #nyan-zone.active { display: block; }
+
+        .egg-scene {
+            align-items: center;
+            background: #111827;
+            border-radius: 16px;
+            display: flex;
+            height: 180px;
+            justify-content: center;
+        }
+
+        .egg {
+            animation: eggSpin 2.2s linear infinite;
+            background: linear-gradient(160deg, #fff9f0 0%, #f5d0a9 35%, #e9a96a 100%);
+            border: 4px solid rgba(120, 70, 30, 0.8);
+            border-radius: 55% 55% 48% 48% / 60% 60% 40% 40%;
+            height: 96px;
+            position: relative;
+            width: 72px;
+        }
+
+        .egg::before {
+            content: "";
+            background: rgba(255,255,255,0.35);
+            border-radius: 50%;
+            height: 18px;
+            left: 15px;
+            position: absolute;
+            top: 16px;
+            transform: rotate(-20deg);
+            width: 18px;
+        }
+
+        .egg::after {
+            content: "";
+            background: rgba(120, 70, 30, 0.12);
+            border-radius: 50%;
+            bottom: 18px;
+            height: 16px;
+            left: 12px;
+            position: absolute;
+            width: 46px;
+        }
+
+        @keyframes eggSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.05); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        pre {
+            color: var(--text);
+            font-size: 1.4rem;
+            margin: 12px auto 8px;
+            text-align: center;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 18px;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .accessibility-widget {
+            position: fixed;
+            right: 18px;
+            top: 18px;
+            z-index: 20;
+        }
+
+        .accessibility-trigger {
+            align-items: center;
+            animation: accessibilityPulse 2.4s ease-in-out infinite;
+            background: var(--primary);
+            border: 2px solid var(--surface);
+            border-radius: 50%;
+            color: var(--surface);
+            cursor: pointer;
+            display: flex;
+            font: inherit;
+            font-size: 1.05rem;
+            font-weight: 900;
+            height: 54px;
+            justify-content: center;
+            transition: transform 180ms ease, box-shadow 180ms ease;
+            width: 54px;
+        }
+
+        .accessibility-trigger:hover {
+            animation-play-state: paused;
+            transform: scale(1.1);
+        }
+
+        .accessibility-trigger:focus-visible,
+        .accessibility-panel button:focus-visible {
+            outline: 3px solid #f59e0b;
+            outline-offset: 3px;
+        }
+
+        .accessibility-trigger img {
+            display: block;
+            filter: var(--accessibility-icon-filter);
+            height: 38px;
+            object-fit: contain;
+            width: 38px;
+        }
+
+        .accessibility-panel {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            box-shadow: 0 12px 32px var(--shadow);
+            color: var(--text);
+            max-height: calc(100vh - 90px);
+            overflow-y: auto;
+            padding: 16px;
+            position: absolute;
+            right: 0;
+            top: 66px;
+            width: min(320px, calc(100vw - 36px));
+        }
+
+        .accessibility-panel[hidden] { display: none; }
+
+        .accessibility-panel-header {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .accessibility-panel h2 {
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
+        .accessibility-panel button {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            color: var(--text);
+            cursor: pointer;
+            font: inherit;
+            font-weight: 700;
+            min-height: 42px;
+            padding: 9px 11px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .accessibility-panel button:hover { background: var(--primary-soft); }
+
+        .accessibility-panel-header button {
+            font-size: 1.25rem;
+            line-height: 1;
+            min-height: 36px;
+            padding: 6px;
+            text-align: center;
+            width: 36px;
+        }
+
+        .accessibility-options {
+            display: grid;
+            gap: 8px;
+        }
+
+        .visually-hidden {
+            clip: rect(0, 0, 0, 0);
+            clip-path: inset(50%);
+            height: 1px;
+            overflow: hidden;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
+        }
+
+        @keyframes accessibilityPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.3); }
+            50% { box-shadow: 0 0 0 9px rgba(29, 78, 216, 0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .accessibility-trigger { animation: none; transition: none; }
+            html { scroll-behavior: auto; }
+        }
+
+        @media (max-width: 820px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .lead {
+                margin-inline: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            nav { padding-top: 58px; }
+            nav a { padding: 9px 12px; }
+            main { margin-top: 24px; }
+            .class-selector,
+            .text-examples,
+            .panel { padding-left: 16px; padding-right: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="accessibility-widget" id="accessibility-widget">
+        <button class="accessibility-trigger" id="accessibility-trigger" type="button"
+            aria-label="Abrir opções de acessibilidade" aria-controls="accessibility-panel" aria-expanded="false">
+            <img src="Fotos/Icone Acesibilidade.png" alt="" aria-hidden="true">
+        </button>
+        <section class="accessibility-panel" id="accessibility-panel" aria-labelledby="accessibility-title" hidden>
+            <div class="accessibility-panel-header">
+                <h2 id="accessibility-title">Acessibilidade</h2>
+                <button id="accessibility-close" type="button" aria-label="Fechar opções">&times;</button>
+            </div>
+            <div class="accessibility-options">
+                <button class="accessibility-option" id="theme-toggle" type="button">Tema escuro</button>
+                <button class="accessibility-option" id="font-increase" type="button">Aumentar fonte</button>
+                <button class="accessibility-option" id="font-decrease" type="button">Diminuir fonte</button>
+                <button class="accessibility-option" id="contrast-toggle" type="button">Aumentar contraste</button>
+                <button class="accessibility-option" id="spacing-toggle" type="button">Aumentar espaçamento entre letras</button>
+                <button class="accessibility-option" id="accessibility-reset" type="button">Reiniciar</button>
+            </div>
+            <p class="visually-hidden" id="accessibility-status" aria-live="polite"></p>
+        </section>
+    </aside>
+
+    <nav>
+        <a href="anuario.html">O anuário</a>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="#turmas">Turmas</a>
+    </nav>
+
+    <main>
+        <header>
+            <div class="eyebrow">Colegio Anglo Pedreira • 2026</div>
+
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <h1>Anuário</h1>
+                    <p class="lead">Descubra memórias, conquistas e momentos que marcaram o ano letivo em uma edição especial pensada para celebrar toda a comunidade escolar.</p>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#turmas">Ver turmas</a>
+                        <a class="btn btn-secondary" href="#sobre">Sobre a edição</a>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="image-wrap">
+                        <img src="Fotos/R.png" alt="Logotipo do Colégio Anglo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card">
+                    <strong>2026</strong>
+                    <span>Ano da edição</span>
+                </div>
+                <div class="stat-card">
+                    <strong>+120</strong>
+                    <span>Memórias reunidas</span>
+                </div>
+                <div class="stat-card">
+                    <strong>1</strong>
+                    <span>História para lembrar</span>
+                </div>
+            </div>
+
+            <section id="sobre" style="margin-top: 36px;">
+                <h2><kbd></kbd> Um ano para lembrar <kbd></kbd></h2>
+                <p id="typing-text">Este anuário reune momentos, amizades e histórias vividas no Colegio Anglo Pedreira.</p>
+            </section>
+
+            <div class="intro-photo-area">
+                <div class="intro-photo-box">
+                    <span>Espaço para foto</span>
+                </div>
+            </div>
+
+            <section class="text-examples" id="textos">
+                <h2>Sobre esta edição</h2>
+                <p>Uma coleção <strong>especial</strong> de lembranças, encontros e conquistas da nossa comunidade escolar.</p>
+                <p>Cada pagina guarda uma <em>história diferente</em> e ajuda a manter vivo o que aprendemos juntos.</p>
+                <h3>O que você vai encontrar</h3>
+                <ul>
+                    <li>Momentos marcantes do ano letivo</li>
+                    <li>Amizades construidas na escola</li>
+                    <li>Conquistas de alunos e professores</li>
+                </ul>
+                <blockquote>As melhores lembranças são aquelas que construimos juntos.</blockquote>
+            </section>
+
+            <section class="class-selector" id="turmas">
+                <h2>Selecione sua turma</h2>
+                <p>Escolha o ano e o ciclo para abrir as turmas disponíveis.</p>
+                <div class="field">
+                    <label for="year-select">Ano</label>
+                    <select id="year-select">
+                        <option value="">Selecione o ano</option>
+                        <option value="2026">2026</option>
+                    </select>
+                </div>
+                <div class="field" id="cycle-field">
+                    <label for="cycle-select">Ciclo</label>
+                    <select id="cycle-select">
+                        <option value="">Selecione o ciclo</option>
+                        <option value="infantil">Infantil</option>
+                        <option value="fundamental-1">Ensino Fundamental 1</option>
+                        <option value="fundamental-2">Ensino Fundamental 2</option>
+                        <option value="medio">Ensino Medio</option>
+                    </select>
+                </div>
+                <div class="field" id="class-field">
+                    <label for="class-select">Turma</label>
+                    <select id="class-select">
+                        <option value="">Selecione a turma</option>
+                    </select>
+                </div>
+                <p id="selection-message" aria-live="polite"></p>
+            </section>
+
+            <section id="people-section" aria-live="polite">
+                <h2 id="people-title"></h2>
+                <div class="people-grid" id="people-grid"></div>
+            </section>
+
+            <details id="more-details">
+                <summary id="saiba-mais">Ver mais</summary>
+                <p>Uma pagina feita com HTML, CSS e JavaScript para celebrar nossa historia.
+                    Feito por alunos do Nono Ano : 
+                    Heitor Souza, 
+                    Vitor Geraldi, 
+                    Thomas Venturini, 
+                    Jõao Oliveira.
+                </p>
+            </details>
+
+            <div id="nyan-zone" aria-live="polite">
+                <div class="egg-scene">
+                    <div class="egg"></div>
+                </div>
+            </div>
+        </header>
+    </main>
+
+    <pre>  /\_/\
+ ( o.o )
+  &gt; ^ &lt;</pre>
+
+    <footer><p>&copy; 2026 Meu Site</p></footer>
+
+    <script>
+        const yearSelect = document.querySelector('#year-select');
+        const cycleField = document.querySelector('#cycle-field');
+        const cycleSelect = document.querySelector('#cycle-select');
+        const classField = document.querySelector('#class-field');
+        const classSelect = document.querySelector('#class-select');
+        const selectionMessage = document.querySelector('#selection-message');
+        const peopleSection = document.querySelector('#people-section');
+        const peopleTitle = document.querySelector('#people-title');
+        const peopleGrid = document.querySelector('#people-grid');
+        const saibaMais = document.querySelector('#saiba-mais');
+        const moreDetails = document.querySelector('#more-details');
+        const nyanZone = document.querySelector('#nyan-zone');
+        const typingText = document.querySelector('#typing-text');
+        const accessibilityWidget = document.querySelector('#accessibility-widget');
+        const accessibilityTrigger = document.querySelector('#accessibility-trigger');
+        const accessibilityPanel = document.querySelector('#accessibility-panel');
+        const accessibilityClose = document.querySelector('#accessibility-close');
+        const accessibilityStatus = document.querySelector('#accessibility-status');
+        const themeToggle = document.querySelector('#theme-toggle');
+        const fontIncrease = document.querySelector('#font-increase');
+        const fontDecrease = document.querySelector('#font-decrease');
+        const contrastToggle = document.querySelector('#contrast-toggle');
+        const spacingToggle = document.querySelector('#spacing-toggle');
+        const accessibilityReset = document.querySelector('#accessibility-reset');
+
+        let saibaMaisClicks = 0;
+        let accessibilityFontSize = 100;
+
+        function setAccessibilityPanel(isOpen) {
+            accessibilityPanel.hidden = !isOpen;
+            accessibilityTrigger.setAttribute('aria-expanded', String(isOpen));
+
+            if (isOpen) {
+                accessibilityPanel.querySelector('.accessibility-option').focus();
+            } else {
+                accessibilityTrigger.focus();
+            }
+        }
+
+        accessibilityTrigger.addEventListener('click', () => {
+            setAccessibilityPanel(accessibilityPanel.hidden);
+        });
+
+        accessibilityClose.addEventListener('click', () => setAccessibilityPanel(false));
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !accessibilityPanel.hidden) {
+                setAccessibilityPanel(false);
+            }
+        });
+
+        document.addEventListener('pointerdown', (event) => {
+            if (!accessibilityPanel.hidden && !accessibilityWidget.contains(event.target)) {
+                setAccessibilityPanel(false);
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.dataset.theme !== 'dark';
+            document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+            themeToggle.textContent = isDark ? 'Tema claro' : 'Tema escuro';
+            accessibilityStatus.textContent = isDark ? 'Tema escuro ativado.' : 'Tema claro ativado.';
+        });
+
+        function updateAccessibilityFontSize() {
+            document.documentElement.style.setProperty('--accessibility-font-size', `${accessibilityFontSize}%`);
+            accessibilityStatus.textContent = `Tamanho da fonte: ${accessibilityFontSize}%.`;
+        }
+
+        fontIncrease.addEventListener('click', () => {
+            accessibilityFontSize = Math.min(140, accessibilityFontSize + 10);
+            updateAccessibilityFontSize();
+        });
+
+        fontDecrease.addEventListener('click', () => {
+            accessibilityFontSize = Math.max(80, accessibilityFontSize - 10);
+            updateAccessibilityFontSize();
+        });
+
+        contrastToggle.addEventListener('click', () => {
+            const isEnabled = document.documentElement.classList.toggle('high-contrast');
+            contrastToggle.textContent = isEnabled ? 'Desativar alto contraste' : 'Aumentar contraste';
+            accessibilityStatus.textContent = isEnabled ? 'Alto contraste ativado.' : 'Alto contraste desativado.';
+        });
+
+        spacingToggle.addEventListener('click', () => {
+            const isEnabled = document.body.classList.toggle('accessibility-letter-spacing');
+            spacingToggle.textContent = isEnabled
+                ? 'Restaurar espaçamento entre letras'
+                : 'Aumentar espaçamento entre letras';
+            accessibilityStatus.textContent = isEnabled
+                ? 'Espaçamento entre letras aumentado.'
+                : 'Espaçamento entre letras restaurado.';
+        });
+
+        accessibilityReset.addEventListener('click', () => {
+            document.documentElement.dataset.theme = 'light';
+            document.documentElement.style.removeProperty('--accessibility-font-size');
+            document.documentElement.classList.remove('high-contrast');
+            document.body.classList.remove('accessibility-letter-spacing');
+            accessibilityFontSize = 100;
+            themeToggle.textContent = 'Tema escuro';
+            contrastToggle.textContent = 'Aumentar contraste';
+            spacingToggle.textContent = 'Aumentar espaçamento entre letras';
+            accessibilityStatus.textContent = 'Configurações de acessibilidade reiniciadas.';
+        });
+
+        // Cada aluno abaixo e independente: altere nome e foto individualmente.
+        // Enquanto foto estiver vazia, o cartao mostra a imagem padrao.
+        const personNamesByCycle = {
+            infantil: {
+                'Infantil I': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'Default Placeholder.png' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-1-aluno-20' }
+                ],
+                'Infantil II': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-2-aluno-20' }
+                ],
+                'Infantil III': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-3-aluno-20' }
+                ],
+                'Infantil IV': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'infantil-4-aluno-20' }
+                ]
+            },
+            'fundamental-1': {
+                '1° Ensino Fundamental I': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-1-aluno-20' }
+                ],
+                '2° Ensino Fundamental I': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-2-aluno-20' }
+                ],
+                '3° Ensino Fundamental I': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-3-aluno-20' }
+                ],
+                '4° Ensino Fundamental I': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-4-aluno-20' }
+                ],
+                '5° Ensino Fundamental I': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-1-5-aluno-20' }
+                ]
+            },
+            'fundamental-2': {
+                '6° A Ensino Fundamental II': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-1-aluno-20' }
+                ],
+                '6° B Ensino Fundamental II': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-2-aluno-20' }
+                ],
+                '7° Ensino Fundamental II': [
+                    { nome: 'Ana Carolina Teixeira Mendes Dos Santos', foto: 'Fotos/7 ano/Ana_Carolina.jpg', id: 'fundamental-2-3-aluno-01' },
+                    { nome: 'Ana Clara Beltrami Barreto', foto: 'Fotos/7 ano/Ana_Clara.jpg', id: 'fundamental-2-3-aluno-02' },
+                    { nome: 'Anna Laura Lima Candido Da Silva', foto: 'Fotos/7 ano/Ana_Laura_.jpg', id: 'fundamental-2-3-aluno-03' },
+                    { nome: 'Arthur Pereira Ramos', foto: 'Fotos/7 ano/Arthur_.jpg', id: 'fundamental-2-3-aluno-04' },
+                    { nome: 'Bernardo De Caputo Ascencio', foto: 'Fotos/7 ano/Bernardo.jpg', id: 'fundamental-2-3-aluno-05' },
+                    { nome: 'Bernardo Nery Macedo', foto: 'Fotos/7 ano/Bernardo_Neri.jpg', id: 'fundamental-2-3-aluno-06' },
+                    { nome: 'Davi De Godoi Moreira Villalva', foto: 'Fotos/7 ano/Davi_villalva.jpg', id: 'fundamental-2-3-aluno-07' },
+                    { nome: 'Davi Panigassi', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-08' },
+                    { nome: 'Eduardo Silva Bicudo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-09' },
+                    { nome: 'Francisco Emboaba De Lima Oliveira', foto: 'Fotos/7 ano/Francisco.jpg', id: 'fundamental-2-3-aluno-10' },
+                    { nome: "Gabriel Cinatti Dal'Bo", foto: 'Fotos/7 ano/Gabriel_dalbó.jpg', id: 'fundamental-2-3-aluno-11' },
+                    { nome: 'Giovanna Colsato', foto: 'Fotos/7 ano/Giovana.jpg', id: 'fundamental-2-3-aluno-12' },
+                    { nome: 'Guilherme Cunha Jarreta', foto: 'Fotos/7 ano/Guilherme_jarreta.jpg', id: 'fundamental-2-3-aluno-13' },
+                    { nome: 'Helena De Godoi Moreira Villalva', foto: 'Fotos/7 ano/Helena_villalva.jpg', id: 'fundamental-2-3-aluno-14' },
+                    { nome: 'Heloísa Polliti Rossi', foto: 'Fotos/7 ano/Heloísa_Rossi.jpg', id: 'fundamental-2-3-aluno-15' },
+                    { nome: 'Isabelli Benevides Dos Santos', foto: 'Fotos/7 ano/Isabelly.jpg', id: 'fundamental-2-3-aluno-16' },
+                    { nome: 'Isís Victória Santos Matias', foto: 'Fotos/7 ano/Ísis_.jpg', id: 'fundamental-2-3-aluno-17' },
+                    { nome: 'João Guilherme Menezes Da Cruz', foto: 'Fotos/7 ano/João_guilherme_.jpg', id: 'fundamental-2-3-aluno-18' },
+                    { nome: 'João Miguel Logli Armelim', foto: 'Fotos/7 ano/João_Miguel_armelin.jpg', id: 'fundamental-2-3-aluno-19' },
+                    { nome: 'Laura Inamonico', foto: 'Fotos/7 ano/Laura_inamônico.jpg', id: 'fundamental-2-3-aluno-20' },
+                    { nome: 'Lorenzo Gallo Romio', foto: 'Fotos/7 ano/Lorenzo_romio.jpg', id: 'fundamental-2-3-aluno-21' },
+                    { nome: 'Lorenzo Julião Da Silva', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-22' },
+                    { nome: 'Lorenzo Macedo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-23' },
+                    { nome: 'Lucas Elias Marcon', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-24' },
+                    { nome: 'Maria Luiza de Godoi', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-25' },
+                    { nome: 'Marília Adabo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-26' },
+                    { nome: 'Miguel Carlos Preto De Godou Filho', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-27' },
+                    { nome: 'Nicolly Martins De Carlos', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-28' },
+                    { nome: 'Pietro Gabriel Moscão', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-29' },
+                    { nome: 'Sofia Scarmanhã', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-30' },
+                    { nome: 'Vítor Voltan Silva', foto: 'Default PlaceHolder.png', id: 'fundamental-2-3-aluno-31' }
+                ],
+                '8° Ensino Fundamental II': [
+                    { nome: 'Alice Baldasso Mattos', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-01' },
+                    { nome: 'André Paganini Bassan', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-02' },
+                    { nome: 'Arthur Sobrinho Tonelotti', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-03' },
+                    { nome: 'Felipe Soares Petrin', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-04' },
+                    { nome: 'Heloísa Rossi', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-05' },
+                    { nome: 'Isabella Oliveira Sales', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-06' },
+                    { nome: 'Isadhora Bianchi Lot', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-07' },
+                    { nome: 'Isadora Polli Arioli', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-08' },
+                    { nome: 'Isaque Roman Vitorino', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-09' },
+                    { nome: 'João Pedro De Oliveiro', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-10' },
+                    { nome: 'Livia Brandão De Barros', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-11' },
+                    { nome: 'Livia Nogueira Moraes', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-12' },
+                    { nome: 'Lorena Bianchi Sando', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-13' },
+                    { nome: 'Lorenzo Maziero Mazolini ', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-14' },
+                    { nome: 'Lorenzzo Mascimbene', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-15' },
+                    { nome: 'Maria Clara Henrique Gonçalves', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-16' },
+                    { nome: 'Maria Luiza Da Cunha', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-17' },
+                    { nome: 'Nicolas De Souza Martins', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-18' },
+                    { nome: 'Rafael Fiel De Amorin', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-19' },
+                    { nome: 'Theodoro Pereira Lopes', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-20' },
+                    { nome: 'Valentina Ceda Marchiori', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-21' },
+                    { nome: 'Brayan Miguel Da Costa Guimarães', foto: 'Default PlaceHolder.png', id: 'fundamental-2-4-aluno-22' }
+                ],
+                '9° A Ensino Fundamental II': [
+                    { nome: 'Alice Bortolotti Olivari', foto: 'Fotos/9A/Aliche.jpg', id: 'fundamental-2-5-aluno-02' },
+                    { nome: 'Amanda Lopes Ferreira ', foto: 'Fotos/9A/Amanda.jpg', id: 'fundamental-2-5-aluno-13' },
+                    { nome: 'Camila Spancerski', foto: 'Fotos/9A/Turias.jpg', id: 'fundamental-2-5-aluno-14' },
+                    { nome: 'Felipe Belarmino', foto: 'Fotos/9A/Belarmininha.jpg', id: 'fundamental-2-5-aluno-03' },
+                    { nome: 'Frederico Borin Steola', foto: 'Fotos/9A/Fred Erico.jpg', id: 'fundamental-2-5-aluno-05' },
+                    { nome: 'Gabriela Gonçalves', foto: 'Fotos/9A/Gabriela.jpg', id: 'fundamental-2-5-aluno-15' },
+                    { nome: 'Gustavo Henrique Marchiori Marcato', foto: 'Fotos/9A/Gugu aurafarma.jpg', id: 'fundamental-2-5-aluno-07' },
+                    { nome: 'Heitor Bryan de Souza', foto: 'Fotos/9A/Beyan.jpg', id: 'fundamental-2-5-aluno-04' },
+                    { nome: 'Heitor Pereira de Toledo Oliveira', foto: 'Fotos/9A/Toledo.jpg', id: 'fundamental-2-5-aluno-12' },
+                    { nome: 'Isadora Gouvêa Leite', foto: 'Fotos/9A/gouveia.jpg', id: 'fundamental-2-5-aluno-06' },
+                    { nome: 'Isadora Henrique Sposito', foto: 'Fotos/9A/Isadora menos torta.jpg', id: 'fundamental-2-5-aluno-08' },
+                    { nome: 'Larissa Saturnino dos Santos', foto: 'Fotos/9A/Larissa.jpg', id: 'fundamental-2-5-aluno-16' },
+                    { nome: 'Manuela Alves de Oliveira', foto: 'Fotos/9A/Manuela.jpg', id: 'fundamental-2-5-aluno-09' },
+                    { nome: 'Maria Eduarda Chiorato', foto: 'Fotos/9A/Duda.jpg', id: 'fundamental-2-5-aluno-17' },
+                    { nome: 'Marina Manias', foto: 'Fotos/9A/Marina.jpg', id: 'fundamental-2-5-aluno-20' },
+                    { nome: 'Naomy Helena Berloffa', foto: 'Fotos/9A/Naome.jpg', id: 'fundamental-2-5-aluno-21' },
+                    { nome: 'Olivia da Costa Silva', foto: 'Fotos/9A/OLIVIA.jpg', id: 'fundamental-2-5-aluno-19' },
+                    { nome: 'Pedro Abel Rossetti', foto: 'Fotos/9A/bebel aura.jpg', id: 'fundamental-2-5-aluno-01' },
+                    { nome: 'Pedro Henrique Cartarozzi', foto: 'Fotos/9A/pepe.jpg', id: 'fundamental-2-5-aluno-10' },
+                    { nome: 'Taisy Cristina dos Santos', foto: 'Fotos/9A/Taise.jpg', id: 'fundamental-2-5-aluno-11' },
+                    { nome: 'Vitor Geraldi', foto: 'Fotos/9A/VITOR.jpg', id: 'fundamental-2-5-aluno-18' }
+                ],
+                '9° B Ensino Fundamental II': [
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-01' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-02' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-03' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-04' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-05' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-06' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-07' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-08' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-09' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-10' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-11' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-12' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-13' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-14' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-15' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-16' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-17' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-18' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-19' },
+                    { nome: 'Aluno Anônimo', foto: 'Default PlaceHolder.png', id: 'fundamental-2-6-aluno-20' }
+                ]
+            },
+            medio: {
+                '1° A Ensino Médio': [
+                    { nome: 'Ana Leticia Moraes de Azevedo', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-01' },
+                    { nome: 'Emanuele Vitoria da Silveira', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-02' },
+                    { nome: 'Henrique Piccolomini', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-18' },
+                    { nome: 'Isabella Menoncello', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-03' },
+                    { nome: 'Jonatas Cavalaro', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-04' },
+                    { nome: 'Júlia Splendore Bonamin', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-05' },
+                    { nome: 'Lais Borges Tonelotti', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-06' },
+                    { nome: 'Laura Cecilia Santos Finetti', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-07' },
+                    { nome: 'Letícia Manzato', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-08' },
+                    { nome: 'Lorena Ketily Godoy da Costa', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-09' },
+                    { nome: 'Madalena Lixandrão Costa', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-10' },
+                    { nome: 'Manuela de Azevedo Manara da Silva', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-11' },
+                    { nome: 'Manuella Rossi', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-12' },
+                    { nome: 'Maria Eduarda Defendi Amaro', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-13' },
+                    { nome: 'Maria Rita Vitória Silva Marcelino', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-14' },
+                    { nome: 'Rodrigo Panigassi', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-15' },
+                    { nome: 'Theo Gabriel Aparecido de Abreu Leite', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-16' },
+                    { nome: 'Vitória Gratti Bento', foto: 'Default PlaceHolder.png', id: 'medio-1-aluno-17' }
+                ],
+                '2° A Ensino Médio': [
+                    { nome: 'Alícia Borin Steola', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-01' },
+                    { nome: 'Ellen Pietra Souza de Paula', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-03' },
+                    { nome: 'Gabriel Henrique Imenes de Moraes', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-04' },
+                    { nome: 'Heitor Castellani Arioli', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-05' },
+                    { nome: 'Heitor Voltan Silva', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-06' },
+                    { nome: 'Henrique Cavicchia Toneloto', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-07' },
+                    { nome: 'Júlia de Andrade', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-08' },
+                    { nome: 'Lorenzo Navarro Maximo', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-09' },
+                    { nome: 'Luiza da Silva Bento', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-16' },
+                    { nome: 'Matteo Silotto Begali (Bianca Siloto Begali)', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-02' },
+                    { nome: 'Milena Martiniano', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-10' },
+                    { nome: 'Pedro Paulo Braga Saragioto', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-11' },
+                    { nome: 'Rafaela Campplln Parpinelli Ferreira', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-12' },
+                    { nome: 'Roger Cartarozzi Arjonas', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-13' },
+                    { nome: 'Samuel de Moraes Moratori', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-14' },
+                    { nome: 'Sofia Menegaço', foto: 'Default PlaceHolder.png', id: 'medio-2-aluno-15' }
+                ],
+                '3° A Ensino Médio': [
+                    { nome: 'Amália Bozzi Sertorio', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-01' },
+                    { nome: 'Ana Clara Dalto', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-02' },
+                    { nome: 'Ana Elisa Corazza Baldasso', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-03' },
+                    { nome: 'Ana Júlia Piccolomini', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-04' },
+                    { nome: 'Arthur Bissoli Ferreira', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-05' },
+                    { nome: 'Beatriz Tonelotti', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-06' },
+                    { nome: 'Cauã Neri Campaci', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-07' },
+                    { nome: 'Felipe de Almeida Oliveira', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-08' },
+                    { nome: 'Jonatas Aparecido de Moraes Alves', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-09' },
+                    { nome: 'Júlia Manarin Celestino', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-10' },
+                    { nome: 'Lívia Castelani', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-11' },
+                    { nome: 'Maria Carolina Oliveira Justo', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-12' },
+                    { nome: 'Maria Luiza Sposito Castellani', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-13' },
+                    { nome: 'Matheus Alves Silva Parma', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-14' },
+                    { nome: 'Miguel Pilon Peron', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-15' },
+                    { nome: 'Otávio Augusto de Oliveira Araujo', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-16' },
+                    { nome: 'Rakelly Aparecida Bueno', foto: 'Default PlaceHolder.png', id: 'medio-3-aluno-17' }
+                ]
+            }
+        };
+
+        const classesByCycle = {
+            infantil: ['Infantil I', 'Infantil II', 'Infantil III', 'Infantil IV'],
+            'fundamental-1': ['1° Ensino Fundamental I', '2° Ensino Fundamental I', '3° Ensino Fundamental I', '4° Ensino Fundamental I', '5° Ensino Fundamental I'],
+            'fundamental-2': ['6° A Ensino Fundamental II', '6° B Ensino Fundamental II', '7° Ensino Fundamental II', '8° Ensino Fundamental II', '9° A Ensino Fundamental II', '9° B Ensino Fundamental II'],
+            medio: ['1° A Ensino Médio', '2° A Ensino Médio', '3° A Ensino Médio']
+        };
+
+        const studentsByClass = {};
+
+        function buildStudentsMap() {
+            Object.entries(personNamesByCycle).forEach(([cycle, classes]) => {
+                Object.entries(classes).forEach(([className, students]) => {
+                    studentsByClass[className] = students.map((student, index) => ({
+                        ...student,
+                        id: student.id || `${cycle}-${className}-aluno-${index + 1}`
+                    }));
+                });
+            });
+        }
+
+        function createPersonCard(student) {
+            const personCard = document.createElement('article');
+            personCard.className = 'person-card';
+            personCard.style.animation = 'fadeInUp 0.45s ease';
+            personCard.dataset.studentId = student.id;
+
+            const photoFrame = document.createElement('div');
+            photoFrame.className = 'photo-frame';
+
+            const personImage = document.createElement('img');
+            if (student.foto) {
+                personImage.src = student.foto;
+                personImage.alt = `Foto de ${student.nome}`;
+                personImage.onerror = () => {
+                    personImage.onerror = null;
+                    personImage.src = 'Default%20PlaceHolder.png';
+                    personImage.alt = `Imagem padrão para ${student.nome}`;
+                };
+            } else {
+                personImage.src = 'Default%20PlaceHolder.png';
+                personImage.alt = `Imagem padrão para ${student.nome}`;
+            }
+            personImage.loading = 'lazy';
+            photoFrame.appendChild(personImage);
+
+            const personName = document.createElement('p');
+            personName.textContent = student.nome;
+
+            personCard.append(photoFrame, personName);
+            return personCard;
+        }
+
+        function renderStudents(className) {
+            peopleGrid.replaceChildren();
+            const students = studentsByClass[className] || [];
+
+            students.forEach((student) => {
+                peopleGrid.appendChild(createPersonCard(student));
+            });
+        }
+        function setTypingEffect() {
+            const text = 'Este anuário reúne momentos, amizades e histórias vividas no Colegio Anglo Pedreira.';
+            let index = 0;
+
+            const timer = setInterval(() => {
+                typingText.textContent = text.slice(0, index + 1);
+                index += 1;
+                if (index >= text.length) {
+                    clearInterval(timer);
+                }
+            }, 30);
+        }
+
+        function resetSelection() {
+            classSelect.replaceChildren(new Option('Selecione a turma', ''));
+            classField.style.display = 'none';
+            selectionMessage.style.display = 'none';
+            peopleSection.style.display = 'none';
+            peopleGrid.replaceChildren();
+        }
+
+        yearSelect.addEventListener('change', () => {
+            const hasYear = yearSelect.value === '2026';
+            cycleField.style.display = hasYear ? 'flex' : 'none';
+            resetSelection();
+            cycleSelect.value = '';
+        });
+
+        cycleSelect.addEventListener('change', () => {
+            const selectedCycle = cycleSelect.value;
+            const classes = classesByCycle[selectedCycle] || [];
+            classSelect.replaceChildren(new Option('Selecione a turma', ''));
+
+            classes.forEach((className) => {
+                classSelect.add(new Option(className, className));
+            });
+
+            classField.style.display = classes.length ? 'flex' : 'none';
+            selectionMessage.style.display = 'none';
+            peopleSection.style.display = 'none';
+            peopleGrid.replaceChildren();
+        });
+
+        classSelect.addEventListener('change', () => {
+            if (!classSelect.value) {
+                selectionMessage.style.display = 'none';
+                peopleSection.style.display = 'none';
+                return;
+            }
+
+            selectionMessage.textContent = `Turma selecionada: ${classSelect.value}`;
+            selectionMessage.style.display = 'block';
+            peopleTitle.textContent = `Alunos da turma ${classSelect.value}`;
+            renderStudents(classSelect.value);
+            peopleSection.style.display = 'block';
+        });
+
+        saibaMais.addEventListener('click', (event) => {
+            event.preventDefault();
+            saibaMaisClicks += 1;
+
+            if (saibaMaisClicks >= 55) {
+                nyanZone.classList.add('active');
+                moreDetails.setAttribute('open', 'open');
+                return;
+            }
+
+            moreDetails.open = !moreDetails.open;
+        });
+
+        buildStudentsMap();
+        setTypingEffect();
+    </script>
+</body>
+</html>
